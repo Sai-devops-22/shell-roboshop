@@ -6,7 +6,7 @@ INSTANCES=("mongodb" "redis" "rabbitmq" "user" "cart" "mysql" "catalogue" "shipp
 ZONE_ID="Z06253831Z4BB44Y5XLFS"
 DOMAIN_NAME="dpractice.site"
 
-for instances in ${INSTANCES(@)}
+for instances in ${INSTANCES[@]}
 do
     INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t2.micro --security-group-ids ssg-028aa04b4b0793ed4 --tag-specifications "ResourceType=instance,
     Tags=[{Key=Name, Value=$instances}]" --query "Instances[0].InstancesId" --output text)
