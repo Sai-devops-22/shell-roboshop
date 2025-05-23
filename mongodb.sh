@@ -20,6 +20,7 @@ VALIDATE(){
         echo "the $2 is SUCCCES..." | tee -a $LOG_FILE
     else
         echo "the $2 is FAILED....." | tee -a $LOG_FILE
+    fi
 }
 
 cp mongodb.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
