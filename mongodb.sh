@@ -1,10 +1,10 @@
 #!/bin/bash
 
 USER_ID=$(id -u)
-LOG_PATH="var/log/shell-roboshop-log"
+LOG_FOLDER="var/log/shellroboshop-log"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-LOG_FILE="$LOG_PATH/$SCRIPT_NAME.log"
-mkdir -p $LOG_FOLDER
+LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
+mkdir -p $LOG_FILE
 echo "THE EXECUTION START TIME:$(date)" | tee -a $LOG_FILE
 
 if [ $USER_ID -ne 0 ]
