@@ -9,7 +9,7 @@ echo "THE EXECUTION START TIME:$(date)" | tee -a $LOG_FILE
 
 if [ $USER_ID -ne 0 ]
 then 
-    echo "login to root user" | tee -a $LOG_FILE
+    echo "login to root user and try again" | tee -a $LOG_FILE
     exit 1
 else
     echo "you are a root user" | tee -a $LOG_FILE
