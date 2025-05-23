@@ -12,6 +12,7 @@ then
     exit 1
 else
     echo "you are a root user" | tee -a $LOG_FILE
+fi
 
 VALIDATE(){
     if [ $1 -eq 0 ]
