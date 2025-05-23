@@ -4,6 +4,7 @@ SG_ID="sg-028aa04b4b0793ed4"
 INSTANCES=("mongodb" "redis" "rabbitmq" "user" "cart" "mysql" "catalogue" "shipping" "frontend")
 ZONE_ID="Z06253831Z4BB44Y5XLFS"
 DOMAIN_NAME="dpractice.site"
+echo "the new way"
 
 for instance in ${INSTANCES[@]}
 do
