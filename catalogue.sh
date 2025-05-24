@@ -81,5 +81,5 @@ then
     mongosh --host mongodb.dpractice.site </app/db/master-data.js &>>$LOG_FILE
     VALIDATE $? "Loading data into MongoDB"
 else
-    echo -e "Data is already loaded ... $Y SKIPPING $N"
+    echo -e "Data is already loaded ...  SKIPPING "
 fi
