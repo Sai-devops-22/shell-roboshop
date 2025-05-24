@@ -40,35 +40,35 @@ else
     echo "already created"
 fi
 
-mkdir -p /app
+mkdir -p /app &>>$LOG_FILE
 
-curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
+curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>>$LOG_FILE
 VALIDATE $? "DOWNLOADING FILE"
 
 rm -rf /app/*
 cd /app
 VALIDATE $? "CREATING APP FOLDER" 
 
-unzip /tmp/shipping.zip
+unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "UNZIPPING"
 
 
-mvn clean package 
+mvn clean package &>>$LOG_FILE
 VALIDATE $? "CLEANING PACKAGE"
 
 mv target/shipping-1.0.jar shipping.jar  &>>$LOG_FILE
 VALIDATE $? "Moving and renaming Jar"
  
-cp $SCRIPT_DIRCT/shipping.service /etc/systemd/system/shipping.service
+cp $SCRIPT_DIRCT/shipping.service /etc/systemd/system/shipping.service &>>$LOG_FILE
 VALIDATE $? "COPMONGO REPO COPYING"
 
-systemctl enable shipping
+systemctl enable shipping &>>$LOG_FILE
 VALIDATE $? "ENABLING SHIPPING"
 
-systemctl start shipping
+systemctl start shipping &>>$LOG_FILE
 VALIDATE $? "STARTING SHIPPING"
 
-dnf install mysql -y 
+dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "INSTALLING MYSQL"
 
 mysql -h mysql.daws84s.site -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities' &>>$LOG_FILE
@@ -79,7 +79,7 @@ then
     mysql -h mysql.daws84s.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
     VALIDATE $? "Loading data into MySQL"
 else
-    echo -e "Data is already loaded into MySQL ... $Y SKIPPING $N"
+    echo -e "Data is already loaded into MySQL ...  SKIPPING "
 fi
 
 systemctl restart shipping &>>$LOG_FILE
