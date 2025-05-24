@@ -41,7 +41,8 @@ VALIDATE $? "ENABLING RABBITMQ"
 systemctl start rabbitmq-server
 VALIDATE $? "STARTING RABBITMQ"
 
-
+rabbitmqctl add_user roboshop $MYSQL_ROOT_PASSWORD
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
 
 
 
