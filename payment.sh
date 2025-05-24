@@ -26,7 +26,7 @@ VALIDATE(){
     fi
 }
 
-dnf install python3 gcc python3-devel -y
+dnf install python3 gcc python3-devel -y &>>$LOG_FILE
 VALIDATE $? "INSTALLING PYTHON"
 
 if [ $? -ne 0 ]
@@ -38,28 +38,28 @@ fi
 
 mkdir -p /app 
 
-curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip 
+curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip &>>$LOG_FILE
 VALIDATE $? "DOWNLOADING FILE"
 
-rm -rf /app/*
+rm -rf /app/* 
 cd /app 
 
-unzip /tmp/payment.zip
+unzip /tmp/payment.zip &>>$LOG_FILE
 VALIDATE $? "UNZIPPING"
 
-pip3 install -r requirements.txt
+pip3 install -r requirements.txt &>>$LOG_FILE
 VALIDATE $? "PYTHON DEPENDENCIES"
 
-cp $SCRIPT_DIRCT/payment.service /etc/systemd/system/payment.service
-VALIDATE $? "COPYING FILES"
-
-systemctl daemon-reload
+cp $SCRIPT_DIRCT/payment.service /etc/systemd/system/payment.service &>>$LOG_FILE
+VALIDATE $? "COPYING FILES" 
+ 
+systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "DAEMON RELOAD"
 
-systemctl enable payment 
+systemctl enable payment &>>$LOG_FILE
 VALIDATE $? "ENABLING PAYMENT"
 
-systemctl start payment
+systemctl start payment &>>$LOG_FILE
 VALIDATE $? "STARTING PAYMENT"
 
 END_DATE=$(date +%s)
