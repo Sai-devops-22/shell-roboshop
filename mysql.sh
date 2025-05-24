@@ -15,8 +15,8 @@ else
     echo "you are a root user" | tee -a $LOG_FILE
 fi
 
-echo "SER ROOT PASSWORD"
-read -s MYSQL_PASSWORD
+echo "Please enter root password to setup"
+read -s MYSQL_ROOT_PASSWORD
 
 VALIDATE(){
     if [ $1 -eq 0 ]
@@ -36,7 +36,7 @@ VALIDATE $? "ENABLING MYSQL"
 systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "STARTING MYSQL"  
 
-mysql_secure_installation --set-root-pass $MYSQL_PASSWORD &>>$LOG_FILE
+mysql_secure_installation --set-root-pass $MYSQL_ROOT_PASSWORD &>>$LOG_FILE
 
 END_DATE=$(date +%s)
 TIME=$(($END_DATE - $START_TIME))
