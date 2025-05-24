@@ -18,7 +18,7 @@ else
 fi
 
 echo "Please enter root password to setup"
-read -s MYSQL_ROOT_PASSWORD
+read -s RABBITMQ_PASSWORD
 
 VALIDATE(){
     if [ $1 -eq 0 ]
@@ -29,20 +29,20 @@ VALIDATE(){
     fi
 }
 
-cp $SCRIPT_DIRCT/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
+cp $SCRIPT_DIRCT/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$LOG_FILE
 VALIDATE $? "COPYING THE FILE"
 
-dnf install rabbitmq-server -y
+dnf install rabbitmq-server -y &>>$LOG_FILE
 VALIDATE $? "INSTALLING RABBITMQ"
 
-systemctl enable rabbitmq-server
+systemctl enable rabbitmq-server &>>$LOG_FILE
 VALIDATE $? "ENABLING RABBITMQ"
 
-systemctl start rabbitmq-server
+systemctl start rabbitmq-server &>>$LOG_FILE
 VALIDATE $? "STARTING RABBITMQ"
 
-rabbitmqctl add_user roboshop $MYSQL_ROOT_PASSWORD
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+rabbitmqctl add_user roboshop $RABBITMQ_PASSWORD &>>$LOG_FILE
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$LOG_FILE
 
 
 
