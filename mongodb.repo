@@ -1,4 +1,4 @@
-#!/bash/bin
+
 
 [mongodb-org-7.0]
 name=MongoDB Repository
