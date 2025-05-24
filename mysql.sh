@@ -1,3 +1,6 @@
+#!/bin/bash
+
+START_TIME=$(date +%s)
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/shellroboshop-log"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
@@ -12,6 +15,9 @@ else
     echo "you are a root user" | tee -a $LOG_FILE
 fi
 
+echo "SER ROOT PASSWORD"
+read -s MYSQL_PASSWORD
+
 VALIDATE(){
     if [ $1 -eq 0 ]
     then    
@@ -21,21 +27,17 @@ VALIDATE(){
     fi
 }
 
-cp mongodb.repo /etc/yum.repos.d/mongo.repo 
-VALIDATE $? "MONGO REPO COPYING" 
+dnf install mysql-server -y &>>$LOG_FILE
+VALIDATE $? "INSTALLING MYSQL"
 
-dnf install mongodb-org -y &>>$LOG_FILE
-VALIDATE $? "INSTALLING MONGO SERVER" 
+systemctl enable mysqld &>>$LOG_FILE
+VALIDATE $? "ENABLING MYSQL"
 
-systemctl enable mongod &>>$LOG_FILE
-VALIDATE $? "Enabling MongoDB"
+systemctl start mysqld &>>$LOG_FILE
+VALIDATE $? "STARTING MYSQL"  
 
-systemctl start mongod &>>$LOG_FILE
-VALIDATE $? "ENABLING ANS STARTING SERVER" 
+mysql_secure_installation --set-root-pass $MYSQL_PASSWORD &>>$LOG_FILE
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf   #s-substitue, g-globally
-VALIDATE $? "EDITING FILE" 
-
-systemctl restart mongod &>>$LOG_FILE
-VALIDATE $? "RESTARTING MONGO" 
-
+END_DATE=$(date +%s)
+TIME=$(($END_DATE - $START_TIME))
+echo "$TIME"
