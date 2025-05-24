@@ -17,9 +17,6 @@ else
     echo "you are a root user" | tee -a $LOG_FILE
 fi
 
-echo "Please enter root password to setup"
-read -s MYSQL_ROOT_PASSWORD
-
 VALIDATE(){
     if [ $1 -eq 0 ]
     then    
