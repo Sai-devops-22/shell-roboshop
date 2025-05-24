@@ -40,6 +40,12 @@ VALIDATE $? "INSTALLING REDIS"
 sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
 VALIDATE $? "CHANGING THE CONFIGURATION FILE"
 
+systemctl enable redis
+VALIDATE $? "ENABLING REDIS"
+
+systemctl start redis
+VALIDATE $? "STARTING REDIS 
+
 END_DATE=$(date +%s)
 TIME=$(($END_DATE - $START_TIME))
 echo "$TIME"
