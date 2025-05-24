@@ -44,31 +44,6 @@ VALIDATE $? "STARTING RABBITMQ"
 rabbitmqctl add_user roboshop $RABBITMQ_PASSWORD &>>$LOG_FILE
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$LOG_FILE
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 END_DATE=$(date +%s)
 TIME=$(($END_DATE - $START_TIME))
 echo "$TIME"
