@@ -1,6 +1,6 @@
 #!/bin/bash
 
-START_TIME=$(date %s)
+
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/shellroboshop-log"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
