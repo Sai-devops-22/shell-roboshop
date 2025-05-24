@@ -34,3 +34,11 @@ VALIDATE $? "ENABLING REDIS"
 dnf install redis -y &>> $LOG_FILE
 VALIDATE $? "INSTALLING REDIS"
 
+#sed editor- permanent change(-i) ane execute(e) 127.0.0.1 to 0.0.0.0 and execute protected-mode 
+#cahnges(c) to procted mode no copying the filr into /etc/redi/redis.conf 
+sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
+VALIDATE $? "CHANGING THE CONFIGURATION FILE"
+
+END_DATE=$(date +%s)
+TIME=$(($END_DATE - $START_TIME))
+echo "$TIME"
